@@ -198,7 +198,7 @@ def run_analysis(df):
     # ----------------------------------------------------
     st.subheader("🏅 Composite Scoring Model")
 
-    scaler = MinMaxScaler()
+    # scaler = MinMaxScaler()
 
     perf_cols = ["return_1_year_regular", "return_3_year_regular", "return_5_year_regular"]
     ir_cols = ["information_ratio_1_year_regular", "information_ratio_3_year_regular", "information_ratio_5_year_regular"]
