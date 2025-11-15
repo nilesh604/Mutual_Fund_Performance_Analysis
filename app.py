@@ -104,6 +104,10 @@ def normalize_columns(df):
 # ================================================================
 # FULL ANALYSIS
 # ================================================================
+def min_max_scale(series):
+    series = series.astype(float)
+    return (series - series.min()) / (series.max() - series.min() + 1e-9)
+
 def run_analysis(df):
 
     # Convert numeric safely
@@ -200,12 +204,14 @@ def run_analysis(df):
     ir_cols = ["information_ratio_1_year_regular", "information_ratio_3_year_regular", "information_ratio_5_year_regular"]
 
     if all(c in df.columns for c in perf_cols):
-        df["performance_score"] = scaler.fit_transform(df[perf_cols].mean(axis=1).values.reshape(-1, 1))
+        #df["performance_score"] = scaler.fit_transform(df[perf_cols].mean(axis=1).values.reshape(-1, 1))
+        df["performance_score"] = min_max_scale(df[perf_cols].mean(axis=1))
     else:
         df["performance_score"] = 0
 
     if all(c in df.columns for c in ir_cols):
-        df["ir_score"] = scaler.fit_transform(df[ir_cols].mean(axis=1).values.reshape(-1, 1))
+        #df["ir_score"] = scaler.fit_transform(df[ir_cols].mean(axis=1).values.reshape(-1, 1))
+        df["ir_score"] = min_max_scale(df[ir_cols].mean(axis=1))
     else:
         df["ir_score"] = 0
 
